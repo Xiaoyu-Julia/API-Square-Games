@@ -1,0 +1,1 @@
+un projet « de type Maven »
