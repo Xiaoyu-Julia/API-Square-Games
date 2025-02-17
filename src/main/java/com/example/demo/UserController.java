@@ -39,9 +39,9 @@ public class UserController {
     }
 
     @PutMapping("/users/{userId}")
-    public void updateUser(@PathVariable int userId, @RequestBody UserCreationParams params) {
+    public UserDto updateUser(@PathVariable int userId, @RequestBody UserCreationParams params) {
         User user = this.userServiceImpl.modifyUser(userId, params.email, params.password);
-        //return new UserDto(user.getUserId(), user.getEmail());
+        return new UserDto(user.getUserId(), user.getEmail());
     }
 
     @DeleteMapping("/users/{userId}")
