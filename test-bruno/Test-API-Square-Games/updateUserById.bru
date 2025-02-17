@@ -1,0 +1,27 @@
+meta {
+  name: updateUserById
+  type: http
+  seq: 7
+}
+
+put {
+  url: http://localhost:8080/users/:userId
+  body: json
+  auth: none
+}
+
+params:path {
+  userId: 0
+}
+
+body:json {
+  {
+      "email": "test@123",
+      "password": "456"
+  }
+}
+
+body:multipart-form {
+  ~email: user1@test.com
+  ~password: test
+}

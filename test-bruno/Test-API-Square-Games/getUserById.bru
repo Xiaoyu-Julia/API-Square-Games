@@ -1,0 +1,20 @@
+meta {
+  name: getUserById
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:8080/users/:userId
+  body: json
+  auth: none
+}
+
+params:path {
+  userId: 0
+}
+
+body:multipart-form {
+  ~email: user1@test.com
+  ~password: test
+}
