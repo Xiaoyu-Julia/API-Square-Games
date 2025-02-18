@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -7,41 +8,60 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    List<User> users = new ArrayList<>();
+
+    @Autowired
+    private UserDao userDao;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    //List<User> users = new ArrayList<>();
     private int userIdCounter = 1;
+
     @Override
     public User createUser(String email, String password) {
         User user = new User(userIdCounter++, email, password);
-        users.add(user);
+        userDao.addUser(user);
+        //users.add(user);
         return user;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return users;
+        return userDao.findAllUsers().toList();
+        //return users;
     }
 
     @Override
     public User getUserById(int userId) {
-        //System.out.println("getUserById: " + userId);
-        return users.get(userId);
+        return userDao.findUserById(userId).orElse(null);
+        //return users.get(userId);
     }
 
     @Override
     public User modifyUser(int userId, String email, String password) {
-        User user = getUserById(userId);
-        for (User u : users) {
-            if (user.getUserId() == u.getUserId()) {
-                u.setEmail(email);
-                u.setPassword(password);
-            }
-        }
-        return user;
+        User user = userDao.findUserById(userId).orElse(null);
+        assert user != null;
+        user.setEmail(email);
+        user.setPassword(password);
+        return userDao.saveModifUser(user);
+
+        //before add DAO
+//        User user = getUserById(userId);
+//        for (User u : users) {
+//            if (user.getUserId() == u.getUserId()) {
+//                u.setEmail(email);
+//                u.setPassword(password);
+//            }
+//        }
+//        return user;
     }
 
     @Override
     public void deleteUser(int userId){
-        users.remove(userId);
+        userDao.deleteUser(userId);
+       // users.remove(userId);
     }
+
 
 }
