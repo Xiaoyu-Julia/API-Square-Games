@@ -3,7 +3,6 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -11,7 +10,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
-    public UserServiceImpl(UserDao userDao) {
+
+    public UserServiceImpl() {
         this.userDao = userDao;
     }
 
@@ -21,14 +21,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(String email, String password) {
         User user = new User(userIdCounter++, email, password);
-        userDao.addUser(user);
+        user.setEmail(email);
+        user.setPassword(password);
+        // Cas pour List
         //users.add(user);
+
+        // Cas pour JPA
+        userDao.addUser(user);
         return user;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userDao.findAllUsers().toList();
+        return userDao.findAll().toList();
         //return users;
     }
 
@@ -44,9 +49,9 @@ public class UserServiceImpl implements UserService {
         assert user != null;
         user.setEmail(email);
         user.setPassword(password);
-        return userDao.saveModifUser(user);
+        return userDao.saveUser(user);
 
-        //before add DAO
+        //before add userDAO
 //        User user = getUserById(userId);
 //        for (User u : users) {
 //            if (user.getUserId() == u.getUserId()) {

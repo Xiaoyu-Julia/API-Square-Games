@@ -10,10 +10,11 @@ import java.util.stream.Stream;
 
 @Service
 public class InMemoryUserDao implements UserDao {
+
     List<User> users = new ArrayList<>();
 
     @Override
-    public @NotNull Stream<User> findAllUsers() {
+    public @NotNull Stream<User> findAll() {
         return users.stream();
     }
 
@@ -29,7 +30,7 @@ public class InMemoryUserDao implements UserDao {
     }
 
     @Override
-    public @NotNull User saveModifUser(@NotNull User user) {
+    public @NotNull User saveUser(@NotNull User user) {
         return users.set(users.indexOf(user), user);
     }
 
@@ -37,4 +38,5 @@ public class InMemoryUserDao implements UserDao {
     public void deleteUser(@NotNull int userId) {
         users.remove(userId);
     }
+
 }
