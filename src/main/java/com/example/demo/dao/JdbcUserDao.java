@@ -1,17 +1,17 @@
-package com.example.demo;
+package com.example.demo.dao;
 
+import com.example.demo.service.User;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+@Service
 public class JdbcUserDao implements UserDao {
 
     private NamedParameterJdbcTemplate jdbcTemplate;

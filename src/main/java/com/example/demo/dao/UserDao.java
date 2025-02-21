@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.dao;
 
+import com.example.demo.service.User;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;

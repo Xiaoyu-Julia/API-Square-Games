@@ -1,14 +1,15 @@
-package com.example.demo;
+package com.example.demo.dao;
 
+import com.example.demo.service.User;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@Service
+@Repository
 public class InMemoryUserDao implements UserDao {
 
     List<User> users = new ArrayList<>();
@@ -36,7 +37,7 @@ public class InMemoryUserDao implements UserDao {
 
     @Override
     public void deleteUser(@NotNull int userId) {
-        users.remove(userId);
+        users.removeIf(user -> user.getUserId() == userId);
     }
 
 }

@@ -1,14 +1,20 @@
-package com.example.demo;
+package com.example.demo.dao;
 
+import com.example.demo.service.User;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
+@Repository
 public class JpaUserDao implements UserDao {
 
+    @Autowired
     private UserEntityRepository userRepository;
+
     public JpaUserDao(UserEntityRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -35,6 +41,7 @@ public class JpaUserDao implements UserDao {
         UserEntity userEntity = convertToUserEntity(user);
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return convertToUser(savedUserEntity);
+
     }
 
     @Override
@@ -43,17 +50,15 @@ public class JpaUserDao implements UserDao {
     }
 
     private User convertToUser(UserEntity userEntity) {
-        User user = new User(userEntity.getId(), userEntity.getEmail(), userEntity.getPassword());
-        user.setUserId(userEntity.getId());
-        user.setEmail(userEntity.getEmail());
-        user.setPassword(userEntity.getPassword());
-        return user;
+        System.out.println("userEntity = " + userEntity);
+        return new User(userEntity.getUser_id(), userEntity.getEmail(), userEntity.getPassword());
     }
 
     private UserEntity convertToUserEntity(User user) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setId(user.getUserId());
+        userEntity.setUser_id(user.getUserId());
         userEntity.setEmail(user.getEmail());
+        userEntity.setPassword(user.getPassword());
         return userEntity;
     }
 
