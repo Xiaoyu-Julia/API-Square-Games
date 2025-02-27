@@ -1,22 +1,26 @@
 package com.example.demo.service;
 
+import jakarta.validation.constraints.NotNull;
+
+import java.util.UUID;
+
 public class User {
-    private int userId;
+    private UUID userId;
     //private String userName;
     private String email;
     private String password;
 
-    public User(int userId, String email, String password) {
+    public User(@NotNull UUID userId, String email, String password) {
         this.userId = userId;
         this.email = email;
         this.password = password;
     }
 
-    public int getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

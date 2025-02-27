@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class UserController {
-    private int userIdCounter = 1; // ne pas mettre 0 dans le id d'une table, car id est la clé primaire
+    //private int userIdCounter = 1; // ne pas mettre 0 dans le id d'une table, car id est la clé primaire
 
     @Autowired
     private UserService userService;
@@ -18,7 +19,7 @@ public class UserController {
     @PostMapping("/users")
     public UserDto addUser(@RequestBody UserCreationParams params) {
         //User user = this.userService.createUser(params.userId, params.email, params.password);
-        User user = this.userService.createUser(new User(userIdCounter++, params.email, params.password));
+        User user = this.userService.createUser(new User(/*userIdCounter++,*/UUID.randomUUID(), params.email, params.password));
         return new UserDto(user.getUserId(), user.getEmail());
     }
 
@@ -37,20 +38,20 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public UserDto getUser(@PathVariable int userId) {
+    public UserDto getUser(@PathVariable UUID userId) {
         User user =  userService.getUserById(userId);
         //System.out.println("user: " + user.getUserId());
         return new UserDto(user.getUserId(), user.getEmail());
     }
 
     @PutMapping("/users/{userId}")
-    public UserDto updateUser(@PathVariable int userId, @RequestBody UserCreationParams params) {
+    public UserDto updateUser(@PathVariable UUID userId, @RequestBody UserCreationParams params) {
         User user = this.userService.modifyUser(userId, params.email, params.password);
         return new UserDto(user.getUserId(), user.getEmail());
     }
 
     @DeleteMapping("/users/{userId}")
-    public void deleteUser(@PathVariable int userId) {
+    public void deleteUser(@PathVariable UUID userId) {
         System.out.println("User deleted: " + userId);
         this.userService.deleteUser(userId);
 

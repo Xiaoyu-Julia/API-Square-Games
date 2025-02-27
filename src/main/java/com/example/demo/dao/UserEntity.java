@@ -5,13 +5,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jdk.jfr.DataAmount;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "user")
 public class UserEntity {
     @Id
     //@GeneratedValue( strategy= GenerationType.AUTO)
     @Column(name="user_id")
-    private int user_id;
+    private UUID user_id;
 
     @Column(name="email")
     public @NotNull @Email String email;
@@ -19,7 +21,7 @@ public class UserEntity {
     @Column(name="password")
     public @NotNull String password;
 
-    public UserEntity(int user_id, String password, String email) {
+    public UserEntity(UUID user_id, String password, String email) {
         this.user_id = user_id;
         this.password = password;
         this.email = email;
@@ -28,11 +30,11 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public int getUser_id() {
+    public UUID getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int id) {
+    public void setUser_id(UUID id) {
         this.user_id = id;
     }
     public String getEmail() {
@@ -48,10 +50,10 @@ public class UserEntity {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return String.format("User [id=%d, email=%s, password=%s]", user_id, email, password);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format("User [id=%d, email=%s, password=%s]", user_id, email, password);
+//    }
 
 }
 

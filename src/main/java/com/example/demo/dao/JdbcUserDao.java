@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
@@ -25,10 +26,11 @@ public class JdbcUserDao implements UserDao {
         String selectSql = "SELECT userId, email, password FROM user";
         List<User> users = jdbcTemplate.query(selectSql, userRowMapper());
         return users.stream();
+//        return jdbcTemplate.stream();
     }
 
     @Override
-    public Optional<User> findUserById(@NotNull int userId) {
+    public Optional<User> findUserById(@NotNull UUID userId) {
         String selectUserSql = "SELECT userId, name, email FROM user WHERE userId = :userId";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("userId", userId);
@@ -41,7 +43,7 @@ public class JdbcUserDao implements UserDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("email", user.getEmail());
         params.addValue("password", user.getPassword());
-        int newUserId = jdbcTemplate.queryForObject(insertSql, params, Integer.class);
+        UUID newUserId = jdbcTemplate.queryForObject(insertSql, params, UUID.class);
         user.setUserId(newUserId);
         return user;
     }
@@ -58,7 +60,7 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public void deleteUser(@NotNull int userId) {
+    public void deleteUser(@NotNull UUID userId) {
         String deleteSql = "DELETE FROM user WHERE userId = :userId";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("userId", userId);
@@ -67,8 +69,8 @@ public class JdbcUserDao implements UserDao {
 
     private RowMapper<User> userRowMapper() {
         return (rs, rowNum) -> {
-            User user = new User(1,"test@test.com", "test");
-            user.setUserId(rs.getInt("userId"));
+            User user = new User(UUID.randomUUID(),"test@test.com", "test");
+            user.setUserId(rs.getObject("userId", UUID.class));
             user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
             return user;

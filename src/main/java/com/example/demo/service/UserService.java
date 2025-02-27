@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
@@ -9,10 +10,10 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User getUserById(int userId);
+    User getUserById(UUID userId);
 
-    User modifyUser(int userId, String email, String password);
+    User modifyUser(UUID userId, String email, String password);
 
-    void deleteUser(int userId);
+    void deleteUser(UUID userId);
 
 }

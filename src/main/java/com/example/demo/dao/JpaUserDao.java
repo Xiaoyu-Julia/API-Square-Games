@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Repository
@@ -25,7 +26,7 @@ public class JpaUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserById(@NotNull int userId) {
+    public Optional<User> findUserById(@NotNull UUID userId) {
         return userRepository.findById(userId).map(this::convertToUser);
     }
 
@@ -45,7 +46,7 @@ public class JpaUserDao implements UserDao {
     }
 
     @Override
-    public void deleteUser(@NotNull int userId) {
+    public void deleteUser(@NotNull UUID userId) {
         userRepository.deleteById(userId);
     }
 

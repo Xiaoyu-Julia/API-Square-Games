@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,13 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int userId) {
+    public User getUserById(UUID userId) {
         return userDao.findUserById(userId).orElse(null);
         //return users.get(userId);
     }
 
     @Override
-    public User modifyUser( int userId, String email, String password) {
+    public User modifyUser(UUID userId, String email, String password) {
         User user = userDao.findUserById(userId).orElse(null);
         assert user != null;
         user.setEmail(email);
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int userId){
+    public void deleteUser(UUID userId){
         userDao.deleteUser(userId);
         // users.remove(userId);
     }

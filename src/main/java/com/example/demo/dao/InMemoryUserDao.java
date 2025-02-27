@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Repository
@@ -20,8 +21,10 @@ public class InMemoryUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserById(@NotNull int userId) {
-        return Optional.ofNullable(users.get(userId));
+    public Optional<User> findUserById(@NotNull UUID userId) {
+        //return Optional.ofNullable(users.get(userId));
+        return users.stream().filter(u -> u.getUserId().equals(userId)).findFirst();
+
     }
 
     @Override
@@ -36,7 +39,7 @@ public class InMemoryUserDao implements UserDao {
     }
 
     @Override
-    public void deleteUser(@NotNull int userId) {
+    public void deleteUser(@NotNull UUID userId) {
         users.removeIf(user -> user.getUserId() == userId);
     }
 

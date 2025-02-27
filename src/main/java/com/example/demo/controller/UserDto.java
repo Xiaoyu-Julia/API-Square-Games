@@ -1,17 +1,19 @@
 package com.example.demo.controller;
 
+import java.util.UUID;
+
 public class UserDto {
-    private int id;
+    private UUID id;
     private String email;
 
-    public UserDto(int id, String email) {
+    public UserDto(UUID id, String email) {
         this.id = id;
         this.email = email;
     }
-    public int getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public String getEmail() {
